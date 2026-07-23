@@ -850,19 +850,49 @@ document.querySelectorAll('.crystal').forEach(c=>{
   c.addEventListener('mouseleave', ()=>{ gsap.to(c, { y:0, x:0, duration:0.4 }); });
 });
 
-/* contact form -> working mailto submission (no backend available in a static file) */
-const contactForm = document.getElementById('contactForm');
-if (contactForm){
-  contactForm.addEventListener('submit', e=>{
+
+const form = document.getElementById('contactForm');
+const submitBtn = contactForm.querySelector('button[type="submit"]');
+
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = document.getElementById('cf-name').value.trim();
+
+   const name = document.getElementById('cf-name').value.trim();
     const email = document.getElementById('cf-email').value.trim();
     const message = document.getElementById('cf-message').value.trim();
     const subject = encodeURIComponent(`Portfolio contact from ${name || 'website visitor'}`);
     const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-    window.location.href = `mailto:goutamkaity142@gmail.com?subject=${subject}&body=${body}`;
-  });
-}
+
+    const formData = new FormData(contactForm);
+    formData.append("access_key", "d9fea792-af5f-4323-a666-b7f66da7906f");
+
+    const originalText = submitBtn.textContent;
+
+    submitBtn.textContent = "Sending...";
+    submitBtn.disabled = true;
+
+    try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Success! Your message has been sent.");
+            form.reset();
+        } else {
+            alert("Error: " + data.message);
+        }
+
+    } catch (error) {
+        alert("Something went wrong. Please try again.");
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+});
 
 /* smooth nav anchor scroll (native smooth already via CSS, this ensures offset) */
 document.querySelectorAll('.nav-links a').forEach(a=>{
