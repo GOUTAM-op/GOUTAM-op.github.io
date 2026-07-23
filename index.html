@@ -312,7 +312,7 @@ nav{
   background:linear-gradient(135deg,var(--violet),#5b3fd9); color:#fff; font-family:var(--f-mono);
   font-size:13px; letter-spacing:.12em; text-transform:uppercase; transition:transform .3s, box-shadow .3s;
 }
-.submit-btn:hover{ transform:translateY(-2px); box-shadow:0 14px 40px -10px rgba(139,107,255,0.55); }
+.submit-btn:hover{ transform:translateY(-2px), translatex(2px) ; box-shadow:0 14px 40px -10px rgba(139,107,255,0.55); }
 
 .contact-side h3{ font-family:var(--f-display); font-weight:600; font-size:28px; margin-bottom:16px; }
 .contact-side p{ color:var(--dim); line-height:1.8; font-size:15px; max-width:44ch; }
@@ -860,7 +860,7 @@ if (contactForm){
     const message = document.getElementById('cf-message').value.trim();
     const subject = encodeURIComponent(`Portfolio contact from ${name || 'website visitor'}`);
     const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-    window.location.href = `mailto:goutamkaity7@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:goutamkaity142@gmail.com?subject=${subject}&body=${body}`;
   });
 }
 
